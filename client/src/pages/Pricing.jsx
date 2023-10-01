@@ -28,7 +28,7 @@ function CheckIcon() {
 }
 const Pricing = () => {
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center p-3 gap-3 lg:flex-row">
+    <div className="w-full h-screen flex flex-col justify-center items-center p-3 gap-3 lg:flex-row">
       <div className=" flex flex-col md:max-w-2xl lg:max-w-2xl justify-center items-center text-center gap-2 lg:text-left lg:items-start mt-5">
         <h1 className=" text-6xl text-sigmaPrimary">Best no-tricks pricing</h1>
         <h1 className=" text-2xl ">

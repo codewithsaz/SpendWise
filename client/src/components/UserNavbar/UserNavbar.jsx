@@ -30,11 +30,6 @@ const UserNavbar = () => {
           Leaderboard
         </a>
       </Typography>
-      <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="#" className="flex items-center">
-          Pricing
-        </a>
-      </Typography>
     </ul>
   );
   return (
@@ -52,7 +47,7 @@ const UserNavbar = () => {
             {navList}
           </div>
           <Button size="sm" className="hidden lg:inline-block bg-sigmaPrimary">
-            <span>Login</span>
+            <span>Buy Premium</span>
           </Button>
           <IconButton
             variant="text"
@@ -95,8 +90,8 @@ const UserNavbar = () => {
       </div>
       <Collapse open={openNav}>
         {navList}
-        <Button variant="gradient" size="sm" fullWidth className="mb-2">
-          <span>Buy Now</span>
+        <Button size="sm" fullWidth className="mb-2 bg-sigmaPrimary">
+          <span>Buy Premium</span>
         </Button>
       </Collapse>
     </Navbar>

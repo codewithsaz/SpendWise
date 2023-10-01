@@ -8,7 +8,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="w-screen h-screen p-2 text-black  dark:bg-sigmaBackground dark:text-white">
+    <div className="w-screen min-h-screen   text-black  dark:bg-sigmaBackground dark:text-white">
       <ToastContainer />
       <Router>
         <MainRoutes />
