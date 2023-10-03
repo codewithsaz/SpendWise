@@ -21,6 +21,10 @@ const userSchema = new Schema({
     type: Number,
     default: 0,
   },
+  income: {
+    type: Number,
+    default: 0,
+  },
   savings: {
     type: Number,
     default: 0,

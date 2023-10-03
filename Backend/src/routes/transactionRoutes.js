@@ -17,13 +17,19 @@ Router.get(
   expenseController.getExpenses
 );
 
+Router.put(
+  "/expense/:referenceID",
+  authenticator.authenticate,
+  expenseController.updateExpense
+);
+
 Router.delete(
   "/expense/:referenceID",
   authenticator.authenticate,
   expenseController.deleteExpense
 );
 
-//expense Routes
+//income Routes
 Router.post(
   "/income/add",
   authenticator.authenticate,
@@ -41,6 +47,12 @@ Router.delete(
   incomeController.deleteIncome
 );
 
+Router.put(
+  "/income/:referenceID",
+  authenticator.authenticate,
+  incomeController.updateIncome
+);
+
 //All transcation routes
 
 Router.get(
@@ -48,12 +60,5 @@ Router.get(
   authenticator.authenticate,
   transactionController.getAllTranscations
 );
-
-// Router.post("/user/login", UserController.loginUser);
-// Router.get(
-//   "/user/details",
-//   authenticator.authenticate,
-//   UserController.getUserDetails
-// );
 
 module.exports = Router;
