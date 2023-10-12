@@ -21,7 +21,8 @@
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "razorpay": "^2.9.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

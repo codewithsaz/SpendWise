@@ -6,3 +6,5 @@ export { default as Dashboard } from "./Dashboard";
 export { default as Report } from "./Report";
 export { default as Leaderboard } from "./Leaderboard";
 export { default as NotFound } from "./NotFound";
+export { default as LoadingPage } from "./LoadingPage";
+export { default as ContentBlockedPage } from "./ContentBlockedPage";

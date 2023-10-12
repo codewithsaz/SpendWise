@@ -7,9 +7,13 @@ import {
   IconButton,
   Card,
 } from "@material-tailwind/react";
+import ToogleThemeButton from "../toogleTheme/ToogleThemeButton";
+
+import { Link, useNavigate } from "react-router-dom";
 
 const HomeNavbar = () => {
   const [openNav, setOpenNav] = React.useState(false);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     window.addEventListener(
@@ -20,44 +24,39 @@ const HomeNavbar = () => {
 
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="#" className="flex items-center">
-          Pages
-        </a>
+      <Typography
+        as="li"
+        variant="small"
+        className="p-1 font-normal text-black dark:text-white"
+      >
+        <Link to="/pricing" className="flex items-center">
+          Pricing
+        </Link>
       </Typography>
-      <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="#" className="flex items-center">
-          Account
-        </a>
-      </Typography>
-      <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="#" className="flex items-center">
-          Blocks
-        </a>
-      </Typography>
-      <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="#" className="flex items-center">
-          Docs
-        </a>
-      </Typography>
+      <ToogleThemeButton />
     </ul>
   );
 
   return (
     <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-2 lg:px-8 lg:py-2 border-0 dark:bg-sigmaBackground  dark:shadow-gray-900">
       <div className="flex items-center justify-between ">
-        <Typography
-          as="a"
-          href="#"
+        <Link
+          to="/"
           className="mr-4 cursor-pointer py-1 font-extrabold text-3xl text-sigmaPrimary"
         >
           SpendWise
-        </Typography>
+        </Link>
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block text-black dark:text-white">
             {navList}
           </div>
-          <Button size="sm" className="hidden lg:inline-block bg-sigmaPrimary">
+          <Button
+            size="sm"
+            className="hidden lg:inline-block bg-sigmaPrimary"
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
             <span>Login</span>
           </Button>
           <IconButton
@@ -70,7 +69,7 @@ const HomeNavbar = () => {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                className="h-6 w-6"
+                className="h-6 w-6 text-black dark:text-white"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={2}
@@ -84,7 +83,7 @@ const HomeNavbar = () => {
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
+                className="h-6 w-6 text-black dark:text-white"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={2}
@@ -101,38 +100,19 @@ const HomeNavbar = () => {
       </div>
       <Collapse open={openNav}>
         {navList}
-        <Button variant="gradient" size="sm" fullWidth className="mb-2">
-          <span>Buy Now</span>
+        <Button
+          variant="gradient"
+          size="sm"
+          fullWidth
+          className="mb-2"
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          <span>Login</span>
         </Button>
       </Collapse>
     </Navbar>
-    /* <div className="mx-auto max-w-screen-md py-12">
-        <Card className="mb-12 overflow-hidden">
-          <img
-            alt="nature"
-            className="h-[32rem] w-full object-cover object-center"
-            src="https://images.unsplash.com/photo-1485470733090-0aae1788d5af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2717&q=80"
-          />
-        </Card>
-        <Typography variant="h2" color="blue-gray" className="mb-2">
-          What is Material Tailwind
-        </Typography>
-        <Typography color="gray" className="font-normal">
-          Can you help me out? you will get a lot of free exposure doing this
-          can my website be in english?. There is too much white space do less
-          with more, so that will be a conversation piece can you rework to make
-          the pizza look more delicious other agencies charge much lesser can
-          you make the blue bluer?. I think we need to start from scratch can my
-          website be in english?, yet make it sexy i&apos;ll pay you in a week
-          we don&apos;t need to pay upfront i hope you understand can you make
-          it stand out more?. Make the font bigger can you help me out? you will
-          get a lot of free exposure doing this that&apos;s going to be a chunk
-          of change other agencies charge much lesser. Are you busy this
-          weekend? I have a new project with a tight deadline that&apos;s going
-          to be a chunk of change. There are more projects lined up charge extra
-          the next time.
-        </Typography>
-      </div> */
   );
 };
 

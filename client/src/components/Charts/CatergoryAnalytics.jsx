@@ -17,56 +17,63 @@ const data = [
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 const CatergoryAnalytics = () => {
   return (
-    <div className=" w-full h-48 lg:h-64 p-2 flex justify-center items-center gap-1 rounded-lg  dark:bg-gray-900 ">
-      <ResponsiveContainer
-        width="95%"
-        // className=" bg-gray-200 dark:bg-gray-900 rounded-lg"
-      >
-        <PieChart>
-          <Tooltip
-            contentStyle={{ background: "white", borderRadius: "5px" }}
-          />
-          <Pie
-            data={data}
-            innerRadius={"70%"}
-            outerRadius={"90%"}
-            paddingAngle={5}
-            dataKey="value"
-          >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
-      <ResponsiveContainer
-        width="95%"
-        // className=" bg-gray-200 dark:bg-gray-900 rounded-lg"
-      >
-        <PieChart>
-          <Tooltip
-            contentStyle={{ background: "white", borderRadius: "5px" }}
-          />
+    <div className=" w-full h- h-full flex justify-center items-center gap-2 rounded-lg  ">
+      <div className="w-full h-full flex flex-col justify-center items-center rounded-md pt-4 bg-gray-200 dark:bg-gray-900">
+        <h2 className=" text-xl">Income</h2>
+        <ResponsiveContainer
+          width="95%"
+          // className=" bg-gray-200 dark:bg-gray-900 rounded-lg"
+        >
+          <PieChart>
+            <Tooltip
+              contentStyle={{ background: "white", borderRadius: "5px" }}
+            />
 
-          <Pie
-            data={data}
-            innerRadius={"70%"}
-            outerRadius={"90%"}
-            paddingAngle={5}
-            dataKey="value"
-          >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
+            <Pie
+              data={data}
+              innerRadius={"70%"}
+              outerRadius={"90%"}
+              paddingAngle={5}
+              dataKey="value"
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="w-full h-full flex flex-col justify-center items-center rounded-md pt-4 bg-gray-200 dark:bg-gray-900">
+        <h2 className=" text-xl">Expense</h2>
+        <ResponsiveContainer
+          width="95%"
+          // className=" bg-gray-200 dark:bg-gray-900 rounded-lg"
+        >
+          <PieChart>
+            <Tooltip
+              contentStyle={{ background: "white", borderRadius: "5px" }}
+            />
+
+            <Pie
+              data={data}
+              innerRadius={"70%"}
+              outerRadius={"90%"}
+              paddingAngle={5}
+              dataKey="value"
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };

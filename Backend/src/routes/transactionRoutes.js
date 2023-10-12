@@ -61,4 +61,22 @@ Router.get(
   transactionController.getAllTranscations
 );
 
+Router.get(
+  "/transaction/monthly",
+  authenticator.verifyPremiumMembership,
+  transactionController.getTransactionsByYear
+);
+
+Router.get(
+  "/expense/category",
+  authenticator.verifyPremiumMembership,
+  expenseController.getExpenseByCategory
+);
+
+Router.get(
+  "/income/category",
+  authenticator.verifyPremiumMembership,
+  incomeController.getIncomeByCategory
+);
+
 module.exports = Router;

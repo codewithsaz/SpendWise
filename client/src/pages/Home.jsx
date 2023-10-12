@@ -1,7 +1,11 @@
 import React from "react";
 import HomeNavbar from "../components/HomeNavbar/HomeNavbar";
 import home_intro from "../assets/images/home_intro.png";
+import { Link, useNavigate } from "react-router-dom";
+
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="w-full h-full">
       <HomeNavbar />
@@ -14,7 +18,12 @@ const Home = () => {
             Effortlessly track your cashflow and gain insights that’ll help you
             see easy opportunities to save.
           </h1>
-          <button className=" bg-sigmaPrimary text-white rounded-lg w-48 p-2 mt-2 ">
+          <button
+            className=" bg-sigmaPrimary text-white rounded-lg w-48 p-2 mt-2 "
+            onClick={() => {
+              navigate("/register");
+            }}
+          >
             Sign Up
           </button>
         </div>

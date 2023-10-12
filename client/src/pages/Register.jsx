@@ -10,7 +10,42 @@ import {
 } from "@material-tailwind/react";
 import SignUp_Img from "../assets/images/SignUp_Img.png";
 
+import { Link, useNavigate } from "react-router-dom";
+
+import axios from "axios";
+import React, { useState } from "react";
+import validator from "validator";
+axios.defaults.withCredentials = true;
+
 const Register = () => {
+  const navigate = useNavigate();
+
+  const base_url = import.meta.env.VITE_BASE_URL;
+
+  const [name, setname] = useState("");
+  const [email, setemail] = useState("");
+  const [emailError, setemailError] = useState(false);
+  const [password, setpassword] = useState("");
+
+  const handleRegister = async () => {
+    const regUserObj = {
+      name: name,
+      email: email,
+      password: password,
+    };
+    console.log(regUserObj);
+    if (!validator.isEmail(email)) {
+      setemailError(true);
+    } else {
+      try {
+        const res = await axios.post(`${base_url}/user/register`, regUserObj);
+        console.log(res);
+        if (res.data.success) navigate("/login");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   return (
     <div className="w-screen h-screen flex justify-center items-center">
       <Card className="w-96">
@@ -29,23 +64,48 @@ const Register = () => {
           />
         </CardHeader>
         <CardBody className="flex flex-col gap-4">
-          <Input label="Name" size="lg" />
-          <Input label="Email" size="lg" />
-          <Input label="Password" size="lg" />
+          <Input
+            label="Name"
+            size="lg"
+            autoComplete="name"
+            onChange={(e) => {
+              setname(e.target.value);
+            }}
+          />
+          <Input
+            label="Email"
+            size="lg"
+            autoComplete="email"
+            onChange={(e) => {
+              setemailError(false);
+              setemail(e.target.value);
+            }}
+            error={emailError}
+          />
+          <Input
+            label="Password"
+            size="lg"
+            autoComplete="new-password"
+            onChange={(e) => {
+              setpassword(e.target.value);
+            }}
+          />
         </CardBody>
         <CardFooter className="pt-0">
-          <Button className=" bg-sigmaPrimary" fullWidth>
+          <Button
+            className=" bg-sigmaPrimary"
+            fullWidth
+            onClick={handleRegister}
+          >
             Sign Up
           </Button>
           <Typography variant="small" className="mt-6 flex justify-center">
             Already a user?
             <Typography
-              as="a"
-              href="#signup"
               variant="small"
               className="ml-1 font-bold text-sigmaPrimary"
             >
-              Login
+              <Link to="/login">Login</Link>
             </Typography>
           </Typography>
         </CardFooter>

@@ -11,14 +11,14 @@ exports.getLeaderboard = async (req, res) => {
       .limit(pageSize);
     const totalUsers = await UserModel.countDocuments();
 
-    const leaderboardUsers = await query.exec();
-    if (leaderboardUsers) {
+    const leaderboard = await query.exec();
+    if (leaderboard) {
       res.status(201).json({
         success: true,
         totalUsers: totalUsers,
         currentPage: pageNumber,
         totalPages: Math.ceil(totalUsers / pageSize),
-        leaderboard: leaderboardUsers,
+        leaderboard: leaderboard,
       });
     } else throw new Error("Cant fetch the leaderboard now!");
   } catch (error) {

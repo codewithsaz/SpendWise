@@ -15,7 +15,18 @@ const leaderboardRoutes = require("./routes/leaderboardRoutes");
 //Database
 const db = require("./utils/database/database");
 
-app.use(cors());
+var corsOptions = {
+  origin: "http://localhost:5173",
+  allowedHeader: true,
+};
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    allowedHeader: true,
+    credentials: true,
+  })
+);
 app.use(helmet());
 app.use(cookieParser());
 app.use(express.json());

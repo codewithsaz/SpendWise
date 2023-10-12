@@ -11,4 +11,10 @@ Router.get(
   UserController.getUserDetails
 );
 
+Router.get(
+  "/user/logout",
+  authenticator.authenticate,
+  UserController.logoutUser
+);
+
 module.exports = Router;

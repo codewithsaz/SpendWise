@@ -30,9 +30,9 @@ const TransactionForm = () => {
   return (
     <div className=" w-full h-max rounded-lg  bg-gray-200 dark:bg-gray-900">
       <Tabs value="expense">
-        <TabsHeader>
+        <TabsHeader className=" dark:bg-sigmaBackground dark:text-white">
           {data.map(({ label, value }) => (
-            <Tab key={value} value={value}>
+            <Tab key={value} value={value} className="dark:text-sigmaPrimary">
               {label}
             </Tab>
           ))}

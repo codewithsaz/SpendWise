@@ -102,3 +102,60 @@ exports.getIncome = async (req, res) => {
     res.status(501).json({ success: false, message: error.message });
   }
 };
+
+exports.getIncomeByCategory = async (req, res) => {
+  const year = Number.parseInt(req.query.year);
+
+  try {
+    const expenseQuery = transactionModel.aggregate([
+      {
+        $match: {
+          userId: req.user._id,
+          transcationType: "income", // Filter for expense transactions
+        },
+      },
+      {
+        $group: {
+          _id: {
+            year: "$date.year",
+            category: "$category", // Group by category
+          },
+          totalIncome: {
+            $sum: "$amount", // Calculate the sum of expenses
+          },
+        },
+      },
+      {
+        $sort: {
+          "_id.year": -1,
+          "_id.month": 1,
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          year: "$_id.year",
+          month: "$_id.month",
+          category: "$_id.category", // Include category field
+          totalIncome: 1,
+        },
+      },
+    ]);
+
+    const expenseResults = await expenseQuery.exec();
+
+    console.log("Aggregation Results:", expenseResults);
+
+    if (expenseResults) {
+      res.status(201).json({
+        success: true,
+        history: expenseResults,
+      });
+    } else {
+      throw new Error("Can't fetch transactions for the specified year");
+    }
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(501).json({ success: false, message: error.message });
+  }
+};
