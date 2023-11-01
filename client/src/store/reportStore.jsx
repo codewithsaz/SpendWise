@@ -1,14 +1,15 @@
 import { create } from "zustand";
 
-const useLeaderboardStore = create((set) => ({
-  leaderboard: [],
+const useReportStore = create((set) => ({
+  report: [],
+  reportChange: 0,
   currentPage: 1,
   itemsPerPage: 10,
   totalPages: 1,
 
-  setLeaderboard: (leaderboard) =>
+  setReport: (report) =>
     set((state) => ({
-      leaderboard: leaderboard,
+      report: report,
     })),
   setCurrentPage: (currentPage) =>
     set((state) => ({
@@ -22,6 +23,10 @@ const useLeaderboardStore = create((set) => ({
     set((state) => ({
       totalPages: totalPages,
     })),
+  setReportChange: () =>
+    set((state) => ({
+      reportChange: state.reportChange + 1,
+    })),
 }));
 
-export default useLeaderboardStore;
+export default useReportStore;

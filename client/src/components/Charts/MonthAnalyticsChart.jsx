@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -11,86 +11,98 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import axios from "axios";
+axios.defaults.withCredentials = true;
+
 const data = [
   {
-    name: "Jan",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
+    month: "Jan",
+    expense: 4000,
+    income: 2400,
   },
   {
-    name: "Feb",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
+    month: "Feb",
+    expense: 3000,
+    income: 1398,
   },
   {
-    name: "Mar",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
+    month: "Mar",
+    expense: 2000,
+    income: 9800,
   },
   {
-    name: "Apr",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
+    month: "Apr",
+    expense: 2780,
+    income: 3908,
   },
   {
-    name: "May",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
+    month: "May",
+    expense: 1890,
+    income: 4800,
   },
   {
-    name: "Jun",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
+    month: "Jun",
+    expense: 2390,
+    income: 3800,
   },
   {
-    name: "Jul",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
+    month: "Jul",
+    expense: 3490,
+    income: 4300,
   },
   {
-    name: "Aug",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
+    month: "Aug",
+    expense: 3490,
+    income: 4300,
   },
   {
-    name: "Sep",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
+    month: "Sep",
+    expense: 3490,
+    income: 4300,
   },
   {
-    name: "Oct",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
+    month: "Oct",
+    expense: 3490,
+    income: 4300,
   },
   {
-    name: "Nov",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
+    month: "Nov",
+    expense: 3490,
+    income: 4300,
   },
   {
-    name: "Dec",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
+    month: "Dec",
+    expense: 3490,
+    income: 4300,
   },
 ];
 
 const MonthAnalyticsChart = () => {
+  const base_url = import.meta.env.VITE_BASE_URL;
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const res = await axios.get(
+  //         `${base_url}/transaction/monthly?year=2023`
+  //       );
+  //       if (res.data.success) {
+  //         data = res.data.history;
+  //         console.log(res.data.history);
+  //       }
+  //     } catch (error) {}
+  //   }
+
+  //   fetchData();
+  // }, []);
   return (
     <div className=" w-full h-48 lg:h-72 pt-2 rounded-lg  dark:bg-gray-900 ">
       {/* <h1>Monthly expense</h1> */}
-      <ResponsiveContainer width="95%" height="100%">
+      <ResponsiveContainer
+        width="95%"
+        height="100%"
+        className="text-black  dark:text-white "
+      >
         <BarChart
           width={500}
           height={300}
@@ -103,12 +115,12 @@ const MonthAnalyticsChart = () => {
           }}
         >
           {/* <CartesianGrid /> */}
-          <XAxis dataKey="name" />
+          <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="pv" fill="#8884d8" />
-          <Bar dataKey="uv" fill="#82ca9d" />
+          <Bar dataKey="expense" fill="#a11d1d" />
+          <Bar dataKey="income" fill="#1da126" />
         </BarChart>
       </ResponsiveContainer>
     </div>

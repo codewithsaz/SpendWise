@@ -6,7 +6,6 @@ const { Schema } = mongoose;
 const orderSchema = new Schema({
   paymentID: {
     type: String,
-    required: true,
   },
   orderID: {
     type: String,

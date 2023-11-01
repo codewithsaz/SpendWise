@@ -10,6 +10,7 @@ import {
 import validator from "validator";
 import useTransactionStore from "../../store/transactionStore";
 import useUserStore from "../../store/userStore";
+import { toast } from "react-toastify";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
@@ -65,10 +66,28 @@ const AddExpense = () => {
           resetInputs();
           setTransactionChange();
           addExpense(amout);
+          toast.success("Expense Added", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         }
       } catch (error) {
-        console.log(error);
-        window.alert("Error found", error);
+        toast.error("Expense Not Added", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     }
   };
@@ -83,6 +102,7 @@ const AddExpense = () => {
               label="Amount"
               color="brown"
               value={amout}
+              className="dark:text-white"
               onChange={(e) => {
                 setamoutError(false);
                 setamout(e.target.value);
@@ -92,6 +112,7 @@ const AddExpense = () => {
             <Input
               size="lg"
               label="Description"
+              className="dark:text-white"
               value={description}
               onChange={(e) => {
                 setdescription(e.target.value);
@@ -105,8 +126,8 @@ const AddExpense = () => {
               min="2022-04-01"
               max="2025-04-30"
               color="brown"
+              className="dark:text-white"
               onChange={(e) => {
-                console.log(formatDate(e.target.value));
                 setdate(formatDate(e.target.value));
               }}
             />

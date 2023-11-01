@@ -1,8 +1,8 @@
 const UserModel = require("../models/userModel");
 
 exports.getLeaderboard = async (req, res) => {
-  const pageNumber = Number.parseInt(req.query.page);
-  const pageSize = Number.parseInt(req.query.size);
+  const pageNumber = Math.floor(Number.parseInt(req.query.page));
+  const pageSize = Math.floor(Number.parseInt(req.query.size));
   try {
     const skip = (pageNumber - 1) * pageSize;
     const query = UserModel.find({}, "name savings")

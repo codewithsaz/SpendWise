@@ -5,7 +5,7 @@ exports.registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    const doesUserExists = await UserModel.find({ email: email }).exec();
+    const doesUserExists = await UserModel.findOne({ email: email }).exec();
     if (doesUserExists)
       res.status(404).json({ success: false, message: "User Already Exists" });
     else {
@@ -14,7 +14,7 @@ exports.registerUser = async (req, res) => {
         name: name,
         email: email,
         password: encrptedPass,
-      }).exec();
+      });
 
       if (createUser)
         res.status(201).json({ success: true, message: "User Created" });
@@ -31,13 +31,11 @@ exports.loginUser = async (req, res) => {
   try {
     const user = await UserModel.findOne({ email: email }).exec();
     if (user) {
-      console.log("user", user);
       const verifyUser = await userService.verifyPassword(
         password,
         user.password
       );
       if (verifyUser) {
-        console.log(verifyUser);
         try {
           const token = await userService.generateToken(
             user._id,
@@ -49,7 +47,7 @@ exports.loginUser = async (req, res) => {
             .cookie("token", token, {
               httpOnly: true, // This makes the cookie HttpOnly
               secure: true,
-              maxAge: 7 * 24 * 60 * 60 * 1000, // Expiration time in milliseconds
+              maxAge: 3 * 24 * 60 * 60 * 1000, // Expiration time in milliseconds
               // sameSite: "strict", // You can adjust SameSite as needed
             })
             .json({
@@ -71,7 +69,7 @@ exports.loginUser = async (req, res) => {
       }
     } else throw new Error("User not found");
   } catch (error) {
-    res.status(401).json({ success: false, error: error.message });
+    res.status(401).json({ success: false, message: error.message });
   }
 };
 

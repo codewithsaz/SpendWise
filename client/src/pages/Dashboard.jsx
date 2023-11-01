@@ -12,9 +12,9 @@ const Dashboard = () => {
     user: state.user,
   }));
   return (
-    <main className=" h-full w-full flex flex-col lg:flex-row justify-evenly items-center  p-2 ">
+    <main className=" h-full w-full flex flex-col lg:flex-row justify-center items-center  p-2 ">
       <section className="w-full lg:w-96 flex flex-col  p-2 gap-2">
-        <div className=" w-full h-48 lg:h-80  rounded-lg p-2 bg-gray-200 dark:bg-gray-900">
+        <div className=" w-full h-max lg:h-80  rounded-lg ">
           <Summarry />
         </div>
         <div className=" w-full h-max lg:h-[30rem]  rounded-lg p-2 bg-gray-200 dark:bg-gray-900">
@@ -23,7 +23,7 @@ const Dashboard = () => {
       </section>
       <section className=" w-full h-max  flex flex-col  p-1 gap-2">
         <section className=" w-full grid grid-cols-1 lg:grid-cols-2 gap-2 ">
-          <div className=" w-full h-72 lg:h-80 flex justify-center items-center rounded-lg p-2 bg-gray-200 dark:bg-gray-900">
+          <div className=" w-full h-72 lg:h-80 flex justify-center items-center rounded-lg bg-gray-200 dark:bg-gray-900">
             {user?.isPremium ? (
               <MonthAnalyticsChart />
             ) : (
@@ -40,7 +40,7 @@ const Dashboard = () => {
             )}
           </div>
         </section>
-        <section className=" w-full h-max lg:h-[30rem] rounded-lg p-2 bg-gray-200 dark:bg-gray-900 overflow-hidden">
+        <section className=" w-auto h-max lg:h-[30rem] rounded-lg p-2 bg-gray-200 dark:bg-gray-900 overflow-hidden">
           <ExpenseTable />
         </section>
       </section>

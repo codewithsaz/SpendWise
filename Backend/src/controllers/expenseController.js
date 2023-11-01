@@ -13,22 +13,22 @@ exports.addExpense = async (req, res) => {
       transcationType: "expense",
       userId: req.user._id,
     });
-
-    console.log(addedExpense);
     if (addedExpense) {
       await UserModel.updateOne(
         { _id: req.user._id },
         {
           $inc: {
             expense: amount,
-            savings: -amount, // Decrement savings by the same amount as the expense
+            savings: -amount,
           },
         }
       );
       res.status(201).json({ success: true, message: "Expense Added" });
     } else throw new Error("Cant add expense right now");
   } catch (error) {
-    res.status(501).json({ success: false, message: error.message });
+    res
+      .status(501)
+      .json({ success: false, message: "Cant add expense right now" });
   }
 };
 
@@ -59,7 +59,7 @@ exports.updateExpense = async (req, res) => {
       { _id: req.user._id },
       {
         $inc: {
-          expenses: amountDifference,
+          expense: amountDifference,
           savings: -amountDifference,
         },
       }
@@ -67,7 +67,9 @@ exports.updateExpense = async (req, res) => {
 
     res.status(200).json({ success: true, message: "Expense Updated" });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res
+      .status(500)
+      .json({ success: false, message: "Cant update expense right now" });
   }
 };
 
@@ -92,15 +94,17 @@ exports.getExpenses = async (req, res) => {
 
       .find({
         userId: req.user._id,
+        transcationType: "expense",
       })
       //   .sort({ "date.month": 1 })
       .exec();
-    console.log(allExpense);
     if (allExpense)
-      res.status(201).json({ success: true, message: "Expense Found" });
-    else throw new Error("Cant add expense right now");
+      res.status(201).json({ success: true, message: "Expenses Fetched" });
+    else throw new Error("Cant fetch expense right now");
   } catch (error) {
-    res.status(501).json({ success: false, message: error.message });
+    res
+      .status(501)
+      .json({ success: false, message: "Cant fetch expense right now" });
   }
 };
 
@@ -129,14 +133,12 @@ exports.getExpenseByCategory = async (req, res) => {
       {
         $sort: {
           "_id.year": -1,
-          "_id.month": 1,
         },
       },
       {
         $project: {
           _id: 0,
           year: "$_id.year",
-          month: "$_id.month",
           category: "$_id.category", // Include category field
           totalExpenses: 1,
         },
@@ -144,8 +146,6 @@ exports.getExpenseByCategory = async (req, res) => {
     ]);
 
     const expenseResults = await expenseQuery.exec();
-
-    console.log("Aggregation Results:", expenseResults);
 
     if (expenseResults) {
       res.status(201).json({

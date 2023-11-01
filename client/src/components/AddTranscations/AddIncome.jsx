@@ -10,6 +10,7 @@ import {
 import validator from "validator";
 import useTransactionStore from "../../store/transactionStore";
 import useUserStore from "../../store/userStore";
+import { toast } from "react-toastify";
 
 import axios from "axios";
 axios.defaults.withCredentials = true;
@@ -66,6 +67,16 @@ const AddIncome = () => {
           resetInputs();
           addIncome(amout);
           setTransactionChange();
+          toast.success("Income Added", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         }
       } catch (error) {
         console.log(error);
@@ -84,6 +95,7 @@ const AddIncome = () => {
               label="Amount"
               value={amout}
               color="brown"
+              className="dark:text-white"
               onChange={(e) => {
                 setamoutError(false);
                 setamout(e.target.value);
@@ -94,6 +106,7 @@ const AddIncome = () => {
               size="lg"
               label="Description"
               color="brown"
+              className="dark:text-white"
               value={description}
               onChange={(e) => {
                 setdescription(e.target.value);
@@ -105,15 +118,16 @@ const AddIncome = () => {
               type="date"
               min="2022-04-01"
               max="2025-04-30"
+              className="dark:text-white"
               color="brown"
               onChange={(e) => {
-                console.log(formatDate(e.target.value));
                 setdate(formatDate(e.target.value));
               }}
             />
             <Select
-              label="Select Expense Type"
+              label="Select Income Type"
               color="brown"
+              className="dark:text-white"
               onChange={(e) => {
                 setcategory(e);
               }}

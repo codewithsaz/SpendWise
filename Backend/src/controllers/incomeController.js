@@ -5,7 +5,7 @@ exports.addIncome = async (req, res) => {
   const { amount, description, date, category } = req.body;
 
   try {
-    const addedExpense = await transactionModel.create({
+    const addedIncome = await transactionModel.create({
       amount: amount,
       date: date,
       description: description,
@@ -14,8 +14,7 @@ exports.addIncome = async (req, res) => {
       userId: req.user._id,
     });
 
-    console.log(addedExpense);
-    if (addedExpense) {
+    if (addedIncome) {
       await UserModel.updateOne(
         { _id: req.user._id },
         {
@@ -72,7 +71,6 @@ exports.updateIncome = async (req, res) => {
 
 exports.deleteIncome = async (req, res) => {
   const { referenceID } = req.params;
-  console.log(referenceID);
   try {
     const deletedExpense = await transactionModel.deleteOne({
       _id: referenceID,
@@ -87,15 +85,15 @@ exports.deleteIncome = async (req, res) => {
 
 exports.getIncome = async (req, res) => {
   try {
-    const allExpense = await transactionModel
+    const allIncome = await transactionModel
 
       .find({
         userId: req.user._id,
+        transcationType: "income",
       })
       //   .sort({ "date.month": 1 })
       .exec();
-    console.log(allExpense);
-    if (allExpense)
+    if (allIncome)
       res.status(201).json({ success: true, message: "Expense Found" });
     else throw new Error("Cant add expense right now");
   } catch (error) {
@@ -107,7 +105,7 @@ exports.getIncomeByCategory = async (req, res) => {
   const year = Number.parseInt(req.query.year);
 
   try {
-    const expenseQuery = transactionModel.aggregate([
+    const incomeQuery = transactionModel.aggregate([
       {
         $match: {
           userId: req.user._id,
@@ -128,25 +126,21 @@ exports.getIncomeByCategory = async (req, res) => {
       {
         $sort: {
           "_id.year": -1,
-          "_id.month": 1,
         },
       },
       {
         $project: {
           _id: 0,
           year: "$_id.year",
-          month: "$_id.month",
           category: "$_id.category", // Include category field
           totalIncome: 1,
         },
       },
     ]);
 
-    const expenseResults = await expenseQuery.exec();
+    const incomeResults = await incomeQuery.exec();
 
-    console.log("Aggregation Results:", expenseResults);
-
-    if (expenseResults) {
+    if (incomeResults) {
       res.status(201).json({
         success: true,
         history: expenseResults,

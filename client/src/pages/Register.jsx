@@ -26,6 +26,7 @@ const Register = () => {
   const [email, setemail] = useState("");
   const [emailError, setemailError] = useState(false);
   const [password, setpassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleRegister = async () => {
     const regUserObj = {
@@ -42,7 +43,7 @@ const Register = () => {
         console.log(res);
         if (res.data.success) navigate("/login");
       } catch (error) {
-        console.log(error);
+        setErrorMessage(error.response.data.message);
       }
     }
   };
@@ -90,6 +91,14 @@ const Register = () => {
               setpassword(e.target.value);
             }}
           />
+          {errorMessage.length > 0 && (
+            <p
+              id="errorMessenger"
+              className=" text-red-700 text-sm m-0 p-0 text-center"
+            >
+              {errorMessage}
+            </p>
+          )}
         </CardBody>
         <CardFooter className="pt-0">
           <Button

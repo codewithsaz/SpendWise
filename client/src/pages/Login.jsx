@@ -29,6 +29,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async () => {
     if (!validator.isEmail(email)) {
@@ -53,6 +54,8 @@ const Login = () => {
         }
       } catch (error) {
         console.log(error);
+        setErrorMessage(error.response.data.message);
+        console.log(error.response.data);
       }
     }
   };
@@ -94,6 +97,14 @@ const Login = () => {
               setPassword(e.target.value);
             }}
           />
+          {errorMessage.length > 0 && (
+            <p
+              id="errorMessenger"
+              className=" text-red-700 text-sm m-0 p-0 text-center"
+            >
+              {errorMessage}
+            </p>
+          )}
         </CardBody>
         <CardFooter className="pt-0">
           <Button className=" bg-sigmaPrimary" fullWidth onClick={handleLogin}>

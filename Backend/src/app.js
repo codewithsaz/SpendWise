@@ -11,18 +11,15 @@ const app = express();
 const userRoutes = require("./routes/userRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
 const leaderboardRoutes = require("./routes/leaderboardRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+const reportRoutes = require("./routes/reportRoutes");
 
 //Database
 const db = require("./utils/database/database");
 
-var corsOptions = {
-  origin: "http://localhost:5173",
-  allowedHeader: true,
-};
-
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5174",
     allowedHeader: true,
     credentials: true,
   })
@@ -35,6 +32,8 @@ app.use(express.json());
 app.use(userRoutes);
 app.use(transactionRoutes);
 app.use(leaderboardRoutes);
+app.use(orderRoutes);
+app.use(reportRoutes);
 
 app.use("/test", (req, res) => {
   res.json("Everything working Good");

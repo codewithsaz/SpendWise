@@ -25,7 +25,7 @@ exports.generateToken = async (id, name, maxStorage) => {
     const token = jwt.sign(
       { userId: id, name: name, maxStorage: maxStorage },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "3d" } // Set the token expiration to 3 days
+      { expiresIn: "3d" }
     );
 
     if (token) {
@@ -40,14 +40,13 @@ exports.verifyToken = (token) => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
-        reject(err); // Token verification failed
+        reject(err);
       } else {
-        // Check if the token has expired
-        const currentTimestamp = Math.floor(Date.now() / 1000); // Get current timestamp in seconds
+        const currentTimestamp = Math.floor(Date.now() / 1000);
         if (decoded.exp && decoded.exp < currentTimestamp) {
-          reject(new Error("Token has expired")); // Token has expired
+          reject(new Error("Token has expired"));
         } else {
-          resolve(decoded); // Token is valid and not expired
+          resolve(decoded);
         }
       }
     });

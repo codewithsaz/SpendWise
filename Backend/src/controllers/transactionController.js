@@ -1,8 +1,8 @@
 const transactionModel = require("../models/transactionModel");
 
 exports.getAllTranscations = async (req, res) => {
-  const pageNumber = Number.parseInt(req.query.page);
-  const pageSize = Number.parseInt(req.query.size);
+  const pageNumber = Math.floor(Number.parseInt(req.query.page));
+  const pageSize = Math.floor(Number.parseInt(req.query.size));
   try {
     const skip = (pageNumber - 1) * pageSize;
 
@@ -48,7 +48,7 @@ exports.getTransactionsByYear = async (req, res) => {
       {
         $group: {
           _id: {
-            // year: "$date.year",
+            year: "$date.year",
             month: "$date.month",
           },
           totalExpenses: {
@@ -72,7 +72,7 @@ exports.getTransactionsByYear = async (req, res) => {
       {
         $project: {
           _id: 0,
-          // year: "$_id.year",
+          year: "$_id.year",
           month: "$_id.month",
           totalExpenses: 1,
           totalIncome: 1,
@@ -80,11 +80,7 @@ exports.getTransactionsByYear = async (req, res) => {
       },
     ]);
 
-    console.log("Aggregation Pipeline:", JSON.stringify(query));
-
     const results = await query.exec();
-
-    console.log("Aggregation Results:", results);
 
     if (results) {
       res.status(201).json({

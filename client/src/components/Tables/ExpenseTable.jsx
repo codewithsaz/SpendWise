@@ -9,8 +9,8 @@ import {
 import Pagination from "../pagination/Pagination";
 import useTransactionStore from "../../store/transactionStore";
 import useUserStore from "../../store/userStore";
-
 import axios from "axios";
+import EditTransaction from "../EditTransaction/EditTransaction";
 axios.defaults.withCredentials = true;
 
 const TABLE_HEAD = [
@@ -63,7 +63,6 @@ const ExpenseTable = () => {
           setHistory(res.data.history);
           setTotalPages(res.data.totalPages);
           setCurrentPage(res.data.currentPage);
-          console.log(res.data);
         }
       } catch (error) {}
     }
@@ -71,7 +70,7 @@ const ExpenseTable = () => {
     fetchData();
   }, [transactionChange, itemsPerPage]);
 
-  async function handleDeleteTransaction(referenceID, transcationType) {
+  async function handleDeleteTransaction(referenceID, transcationType, amount) {
     try {
       const res = await axios.delete(
         `${base_url}/${transcationType}/${referenceID}`
@@ -88,8 +87,28 @@ const ExpenseTable = () => {
     }
   }
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [currentTransaction, setCurrentTransaction] = useState(null);
+
+  const handleEditClick = (transaction) => {
+    console.log("Called handleClick");
+    setCurrentTransaction(transaction);
+    setIsDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setIsDialogOpen(false);
+  };
+
   return (
     <>
+      {isDialogOpen && (
+        <EditTransaction
+          isOpen={isDialogOpen}
+          onClose={handleDialogClose}
+          transactionDetails={currentTransaction}
+        />
+      )}
       <div className="w-full h-max flex justify-between p-2">
         <h2 className="font-semibold text-2xl">History</h2>
         <div className="flex gap-2 items-center">
@@ -128,11 +147,16 @@ const ExpenseTable = () => {
             </tr>
           </thead>
           <tbody>
-            {alltransaction?.map(
-              (
-                { _id, date, transcationType, amount, category, description },
-                index
-              ) => (
+            {alltransaction?.map((transaction, index) => {
+              const {
+                _id,
+                date,
+                transcationType,
+                amount,
+                category,
+                description,
+              } = transaction;
+              return (
                 <tr
                   key={_id}
                   className="even:bg-gray-300 dark:even:bg-gray-700"
@@ -163,7 +187,12 @@ const ExpenseTable = () => {
                     </Typography>
                   </td>
                   <td className="py-2 flex gap-1">
-                    <Button size="sm" color="amber" className="p-2">
+                    <Button
+                      size="sm"
+                      color="amber"
+                      className="p-2"
+                      onClick={() => handleEditClick(transaction)}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
@@ -179,7 +208,7 @@ const ExpenseTable = () => {
                       color="red"
                       className="p-2"
                       onClick={() =>
-                        handleDeleteTransaction(_id, transcationType)
+                        handleDeleteTransaction(_id, transcationType, amount)
                       }
                     >
                       <svg
@@ -197,8 +226,8 @@ const ExpenseTable = () => {
                     </Button>
                   </td>
                 </tr>
-              )
-            )}
+              );
+            })}
           </tbody>
         </table>
       </Card>

@@ -28,7 +28,6 @@ const Pagination = () => {
     setItemsPerPage: state.setItemsPerPage,
   }));
   const [active, setActive] = React.useState(1);
-  console.log(totalPages);
   const pageNumbers = [];
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
@@ -43,7 +42,6 @@ const Pagination = () => {
         setHistory(res.data.history);
         setTotalPages(res.data.totalPages);
         setCurrentPage(res.data.currentPage);
-        console.log(res.data);
       }
     } catch (error) {
       console.log(error);
@@ -56,7 +54,6 @@ const Pagination = () => {
     className:
       active === index ? "bg-sigmaPrimary dark:text-white" : "dark:text-white",
     onClick: () => {
-      console.log(index);
       setActive(index);
       handleContent(index);
     },
